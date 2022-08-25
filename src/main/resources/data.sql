@@ -1,0 +1,8 @@
+insert into stock(ID, STOCK_KEY, NAME, CURRENT_PRICE, LAST_UPDATE)
+values (10001, 'Payconiq', 'Payconiq nl', 123345.34, CURRENT_TIMESTAMP);
+insert into stock(ID, STOCK_KEY, NAME, CURRENT_PRICE, LAST_UPDATE)
+values (10002, 'ABN AMRO', 'ABN AMRO nl', 12222.45, CURRENT_TIMESTAMP);
+insert into stock(ID, STOCK_KEY, NAME, CURRENT_PRICE, LAST_UPDATE)
+values (10003, 'Apple', 'Apple', 13222.45, CURRENT_TIMESTAMP);
+insert into stock(ID, STOCK_KEY, NAME, CURRENT_PRICE, LAST_UPDATE)
+values (10004, 'Rabobank', 'Rabobank', 122.45, CURRENT_TIMESTAMP);

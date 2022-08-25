@@ -1,0 +1,238 @@
+openapi: 3.0.3
+info:
+  title: Payconiq Stock Assignment
+  description: Payconiq stock assigment
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://localhost:8080/api
+tags:
+  - name: stock
+    description: stock management web services
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+paths:
+  /stocks:
+    get:
+      tags:
+        - stock
+      summary: get a list of stocks
+      description: get a list of stocks
+      operationId: findAllStocks
+      parameters:
+        - in: query
+          name: sortBy
+          schema:
+            type: string
+            example: id
+            default: id
+        - in : query
+          name: pageNo
+          schema:
+            type: integer
+            format: int64
+            example: 0
+            default: 0
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+            format: int64
+            example: 0
+            default: 10
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stockList'
+        '404':
+          description: stock not found
+        '405':
+          description: Validation exception
+
+    post:
+      tags:
+        - stock
+      summary: create a stock
+      description: create a stock and add to db
+      operationId: addStock
+      requestBody:
+        description: create a stock in db
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/stockRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '405':
+          description: Invalid input
+
+  /stocks/{stockKey}:
+    get:
+      tags:
+        - stock
+      summary: Find stock by ID
+      description: Returns a single stock
+      operationId: getStockById
+      parameters:
+        - in: path
+          name: stockKey
+          description: create a stock in db
+          required: true
+          schema:
+            type: string
+            format: int64
+            example: Pay_123
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stock'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Stock not found
+
+    patch:
+      tags:
+        - stock
+      summary: Updates a stock in the db
+      description: ''
+      operationId: updateStock
+      parameters:
+        - in: path
+          name: stockKey
+          description: create a stock in db
+          required: true
+          schema:
+            type: string
+            format: int64
+            example: Pay_123
+      requestBody:
+        description: update stock in db
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/priceRequest'
+        required: true
+
+      responses:
+        '405':
+          description: Invalid input
+
+    delete:
+      tags:
+        - stock
+      summary: Deletes a stock
+      description: delete a stock
+      operationId: deleteStock
+      parameters:
+        - in: path
+          name: stockKey
+          description: create a stock in db
+          required: true
+          schema:
+            type: string
+            format: int64
+            example: Pay_123
+      responses:
+        '200':
+          description: deleted successful
+        '400':
+          description: Invalid stockKey
+
+  /authenticate:
+    post:
+      tags:
+        - stock
+      summary: ssss
+      description: deede
+      operationId: authenticate
+      requestBody:
+        description: create a stock in db
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/authenticationRequest'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/authenticationResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Stock not found
+
+components:
+  schemas:
+    stock:
+      type: object
+      properties:
+        stockKey:
+          type: string
+          example: Pay_123
+        name:
+          type: string
+          example: Payconiq stock
+        currentPrice:
+          type: number
+          format: double
+          example: 145.334
+        lastUpdate:
+          type: string
+          format: date-time
+    stockList:
+      type: array
+      items:
+          $ref: '#/components/schemas/stock'
+    stockRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Payconiq stock
+        currentPrice:
+          type: number
+          format: double
+          example: 145.334
+    priceRequest:
+      type: object
+      properties:
+        price:
+          type: number
+          format: double
+          example: 145.334
+    authenticationRequest:
+      type: object
+      properties:
+        userName:
+          type: string
+          example: payconiqUser
+        password:
+          type: string
+          example: userpass
+    authenticationResponse:
+      type: object
+      properties:
+        jwt:
+          type: string
+          example: aasweqwqdderf

@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "stocks.encryption.secret",
+      "type": "java.lang.String",
+      "description": "Description for stocks.encryption.secret."
+  }
+] }
